@@ -20,20 +20,17 @@ public class CategoriaServiceImpl implements CategoriaService {
 
 	@Override
 	public List<Categoria> listar() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.todos();
 	}
 
 	@Override
 	public Categoria carregarPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.pesquisarPorId(id);
 	}
 
 	@Override
 	public void remover(Long id) {
-		// TODO Auto-generated method stub
-
+		dao.remover(id);
 	}
 
 	@Override

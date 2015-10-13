@@ -42,3 +42,7 @@ nav>ul>li {
 .ui-widget-overlay {
 	z-index: 1000;
 }
+
+.panel-body {
+    min-height: 350px;
+}

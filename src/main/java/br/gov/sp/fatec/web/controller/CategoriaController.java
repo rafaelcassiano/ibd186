@@ -3,7 +3,7 @@ package br.gov.sp.fatec.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import br.gov.sp.fatec.service.CategoriaService;
 import br.gov.sp.fatec.web.WebUtils;
 
 @Component(value = "categoriaController")
-@ViewScoped
+@RequestScoped
 public class CategoriaController {
 	private Categoria categoria;
 	private List<Categoria> categorias;
@@ -28,6 +28,9 @@ public class CategoriaController {
 	}
 
 	public String iniciarCadastro() {
+		if(categoria != null) {
+			categoria.setId(0);
+		}
 		return Page.CATEGORIA_EDICAO;
 	}
 
