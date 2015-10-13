@@ -1,0 +1,44 @@
+@CHARSET "ISO-8859-1";
+
+.table td, th {
+	vertical-align: middle !important;
+}
+
+.table thead, tfoot {
+	background-color: #eeeeaa;
+}
+
+.table, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th,
+	.table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th,
+	.table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+	border-color: black;
+}
+
+nav>ul>li {
+	text-align: center;
+}
+
+.table-striped>tbody>tr:nth-child(2n+1)>td, .table-striped>tbody>tr:nth-child(2n+1)>th
+	{
+	background-color: #dddddd;
+}
+
+.navbar-brand {
+	margin-top: 15px;
+	max-width: 30%;
+	padding: 0;
+}
+
+.navbar-brand img {
+	margin-top: -20px;
+	width: 180px;
+}
+
+.no-gutter > [class*='col-'] {
+    padding-right:0;
+    padding-left:0;
+}
+
+.ui-widget-overlay {
+	z-index: 1000;
+}

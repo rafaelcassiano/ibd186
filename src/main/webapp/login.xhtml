@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<head>
+    <ui:include src="layout/imports.xhtml"></ui:include>
+</head>
+<body>
+
+<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <div class="row">
+             <div class="col-md-4">
+                <h1 class="text-center">IBD186</h1>
+            </div>
+          </div>
+      </div>
+      <div class="modal-body">
+       <h:messages id="messages" globalOnly="true" class="alert alert-danger" role="alert"/>
+        <h:form id="loginForm">  
+            <div class="form-group">
+                <label>Usuário</label>
+                <h:inputText class="form-control" value="#{loginController.usuarioLogado.usuario}" ></h:inputText>
+            </div>
+             <div class="form-group">
+                <label>Senha</label>
+                <h:inputSecret class="form-control" value="#{loginController.usuarioLogado.senha}"></h:inputSecret>
+            </div>
+            <h:commandButton action="#{loginController.login}" class="btn btn-primary btn-lg btn-block" value="Login"></h:commandButton>
+        </h:form>
+      </div>
+      <div class="modal-footer">
+          <div class="col-md-12">
+		  </div>	
+      </div>
+  </div>
+  </div>
+</div>
+</body>  
+</html>

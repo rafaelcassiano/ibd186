@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+ 
+    <ui:include src="/layout/imports.xhtml"></ui:include>
+ 
+    <h:body>
+        <ui:include src="/layout/header.xhtml">
+            
+        </ui:include>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>
+                    <ui:insert name="titulo">
+                        <h:outputText value="HOME"/>
+                    </ui:insert>
+                </h2>
+            </div>
+            <div class="panel-body">
+                <h:messages id="messages" globalOnly="true" class="alert alert-warning" role="alert"/>
+                <ui:insert name="principal" >
+                    <h:outputText value="Bem vindo!"/>
+                </ui:insert>
+            </div>
+            <div class="panel-footer">
+                <p class="text-right bold">Desenvolvido por: <strong>TODOS</strong></p>
+            </div>
+        </div>
+    </h:body>
+</html>
