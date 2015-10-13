@@ -3,12 +3,14 @@ package br.gov.sp.fatec.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.SessionScope;
 
-import br.gov.sp.fatec.constantes.PAGE;
+import br.gov.sp.fatec.constantes.Page;
 import br.gov.sp.fatec.model.Usuario;
 import br.gov.sp.fatec.service.UsuarioService;
 import br.gov.sp.fatec.web.WebUtils;
@@ -22,19 +24,22 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService service;
+	
+	@ManagedProperty(value="#{usuarioLogado}")
+	Usuario usuarioLogado;
 
 	public String iniciar() {
 		usuarios = service.listar();
-		return PAGE.USUARIO_LISTA;
+		return Page.USUARIO_LISTA;
 	}
 
 	public String iniciarCadastro() {
-		return PAGE.USUARIO_EDICAO;
+		return Page.USUARIO_EDICAO;
 	}
 
 	public String carregar(Long id) {
 		usuario = service.carregarPorId(id);
-		return PAGE.USUARIO_EDICAO;
+		return Page.USUARIO_EDICAO;
 	}
 	
 	public String remover(Long id) {
@@ -48,8 +53,11 @@ public class UsuarioController {
 			for (String erro : messages) {
 				WebUtils.incluirMensagemAviso(erro);
 			}
-			return PAGE.USUARIO_EDICAO;
+			return Page.USUARIO_EDICAO;
 		} else {
+			if(usuario.getId() == usuarioLogado.getId()) {
+				usuarioLogado = usuario;
+			}
 			return iniciar();
 		}
 	}

@@ -5,7 +5,7 @@ import javax.faces.bean.SessionScoped;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.gov.sp.fatec.constantes.PAGE;
+import br.gov.sp.fatec.constantes.Page;
 import br.gov.sp.fatec.model.Usuario;
 import br.gov.sp.fatec.service.LoginService;
 import br.gov.sp.fatec.web.WebUtils;
@@ -22,14 +22,14 @@ public class LoginController {
 		usuarioLogado = service.validarUsuario(usuarioLogado);
 		if (usuarioLogado == null || usuarioLogado.getId() == 0) {
 			WebUtils.incluirMensagemErro("Usuário ou Senha inválidos!");
-			return PAGE.LOGIN;
+			return Page.LOGIN;
 		}
-		return PAGE.HOME;
+		return Page.HOME;
 	}
 
 	public String logout() {
 		usuarioLogado = null;
-		return PAGE.LOGIN;
+		return Page.LOGIN;
 	}
 
 	public Usuario getUsuarioLogado() {

@@ -2,8 +2,11 @@ package br.gov.sp.fatec.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import br.gov.sp.fatec.model.Usuario;
 
+@Repository
 public interface UsuarioDao {
 	public Usuario carregarPorUsuario(String usuario);
 
