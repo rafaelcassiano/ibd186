@@ -9,21 +9,23 @@ CREATE TABLE usuario (
 
 CREATE TABLE categoria (
   categoria_id BIGINT NOT NULL AUTO_INCREMENT,
-  descricao VARCHAR(500) NOT NULL,
-  PRIMARY KEY(categoria_id)
+  descricao VARCHAR(200) NOT NULL,
+  PRIMARY KEY(categoria_id),
+  INDEX UK_categoria(descricao)
 );
 
 CREATE TABLE produto (
   produto_id BIGINT NOT NULL AUTO_INCREMENT,
-  categoria_id BIGINT NOT NULL,
-  descricao VARCHAR(500) NOT NULL,
+  categoria_id BIGINT NULL,
+  descricao VARCHAR(200) NOT NULL,
   preco NUMERIC(10,2) NOT NULL,
   fg_disponivel BOOL NOT NULL DEFAULT 1,
   PRIMARY KEY(produto_id),
-  INDEX produto_FKIndex1(categoria_id),
+  INDEX FK_produto__categoria(categoria_id),
+  INDEX UK_produto(descricao),
   FOREIGN KEY(categoria_id)
     REFERENCES categoria(categoria_id)
-      ON DELETE NO ACTION
+      ON DELETE SET NULL
       ON UPDATE NO ACTION
 );
 

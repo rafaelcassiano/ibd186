@@ -10,17 +10,40 @@
         
         <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
         </link>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/js/jquery-ui/jquery-ui.min.css">
+        </link>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/js/jquery-ui/jquery-ui.structure.min.css">
+        </link>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/js/jquery-ui/jquery-ui.theme.min.css">
+        </link>
     
         <h:outputStylesheet name="css/bootstrap-theme.min.css" library="bootstrap" />
          <h:outputStylesheet name="css/bootply.css" library="bootstrap" />
-        <h:outputStylesheet name="jquery-ui/jquery-ui.min.css" library="js" />
-        <h:outputStylesheet name="jquery-ui/jquery-ui.structure.min.css" library="js" />
-        <h:outputStylesheet name="jquery-ui/jquery-ui.theme.min.css" library="js" />
         <h:outputStylesheet name="font-awesome.min.css" library="css" />
         <h:outputStylesheet name="estilo.css" library="css" />
         
         <h:outputScript name="jquery-1.11.3.min.js" library="js" />
         <h:outputScript name="js/bootstrap.min.js" library="bootstrap" />
         <h:outputScript name="jquery-ui/jquery-ui.min.js" library="js" />
+        <h:outputScript name="jquery.price_format.2.0.min.js" library="js" />
+        
+        <script type="text/javascript">
+        	$(document).ready(function(){
+        		$("#divAlterarSenha").dialog({
+        		    autoOpen : false,
+        		    modal    : true
+        		});
+        		$("#linkAlterarSenha").click(function(){
+        		   $("#divAlterarSenha").dialog("open"); 
+        		});
+        		$('.inputPreco').priceFormat({
+        		    prefix: 'R$ ',
+        		    centsSeparator: ',',
+        		    thousandsSeparator: '.',
+        		    limit: 10,
+        		    centsLimit:2
+        		});
+        	});
+        </script>
     </h:head>
 </ui:composition>

@@ -24,29 +24,27 @@
                     <h:commandLink action="#{categoriaController.iniciar}" value="Categoria"></h:commandLink>
                 </li>
                  <li> 
-                    <a href="#">
-                        Produto
-                    </a>
+                    <h:commandLink action="#{produtoController.iniciar}" value="Produto"></h:commandLink>
                 </li>
                  <li> 
                     <h:commandLink action="#{usuarioController.iniciar}" value="Usuário"></h:commandLink>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <div class="row-fluid">
-                            <p>
-                                <h:commandLink  action="#{loginController.logout}" title="Sair"><span class="glyphicon glyphicon-off"></span></h:commandLink>
-                                Olá #{loginController.usuarioLogado.nome}
-                            </p>
-                        </div>
-                        <div class="row-fluid" align="center">
-                            <p class="right">
-                                <a id="linkAlterarSenha" role="button"> Alterar Senha
-                                </a>
-                            </p>
-                        </div>
-                    </li>
+                <li>
+                    <div class="row-fluid">
+                        <p>
+                            <h:commandLink  action="#{loginController.logout}" title="Sair"><span class="glyphicon glyphicon-off"></span></h:commandLink>
+                            Olá #{loginController.usuarioLogado.nome}
+                        </p>
+                    </div>
+                    <div class="row-fluid" align="center">
+                        <p class="right">
+                            <a id="linkAlterarSenha" role="button"> Alterar Senha
+                            </a>
+                        </p>
+                    </div>
+                </li>
             </ul>
             </h:form>
         </nav>

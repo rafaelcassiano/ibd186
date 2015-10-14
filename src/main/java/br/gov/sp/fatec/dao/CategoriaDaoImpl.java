@@ -2,6 +2,7 @@ package br.gov.sp.fatec.dao;
 
 import java.util.List;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -40,9 +41,19 @@ public class CategoriaDaoImpl implements CategoriaDao {
 
 	@Override
 	public void remover(Long id) {
+		//removerVinculo(id);
 		Categoria categoria = new Categoria();
 		categoria.setId(id);
 		getCurrentSession().delete(categoria);
+	}
+
+	private void removerVinculo(Long categoriaId) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" update produto set categoria_id = null where categoria_id = :categoriaId ");
+		Session se = getCurrentSession();
+		SQLQuery sql = se.createSQLQuery(sb.toString());
+		sql.setLong("categoriaId", categoriaId);
+		sql.executeUpdate();
 	}
 
 	public Session getCurrentSession() {

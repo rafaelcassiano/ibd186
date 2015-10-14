@@ -51,6 +51,9 @@ public class Produto {
 	}
 
 	public Categoria getCategoria() {
+		if (categoria == null) {
+			categoria = new Categoria();
+		}
 		return categoria;
 	}
 
@@ -64,6 +67,14 @@ public class Produto {
 
 	public void setFgDisponivel(boolean fgDisponivel) {
 		this.fgDisponivel = fgDisponivel;
+	}
+
+	public String getDisponivel() {
+		if (fgDisponivel) {
+			return "Sim";
+		} else {
+			return "Não";
+		}
 	}
 
 }

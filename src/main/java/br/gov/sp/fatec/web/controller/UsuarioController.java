@@ -3,7 +3,6 @@ package br.gov.sp.fatec.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +32,7 @@ public class UsuarioController {
 	}
 
 	public String iniciarCadastro() {
-		if (usuario != null) {
-			usuario.setId(0);
-		}
+		usuario = null;
 		return Page.USUARIO_EDICAO;
 	}
 

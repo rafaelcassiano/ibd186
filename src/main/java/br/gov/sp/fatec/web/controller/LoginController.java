@@ -1,6 +1,9 @@
 package br.gov.sp.fatec.web.controller;
 
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
+
+import liquibase.util.MD5Util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +17,9 @@ import br.gov.sp.fatec.web.WebUtils;
 @SessionScoped
 public class LoginController {
 	private Usuario usuarioLogado;
+	private String senhaAtual;
+	private String novaSenha;
+	private String confirmacaoSenha;
 
 	@Autowired
 	private LoginService service;
@@ -39,7 +45,51 @@ public class LoginController {
 		return usuarioLogado;
 	}
 
+	public void alterarSenha() {
+		System.out.println(senhaAtual);
+		System.out.println(novaSenha);
+		System.out.println(confirmacaoSenha);
+	}
+
+	public void validarSenhaAtual(ValueChangeEvent event) {
+		if (!MD5Util.computeMD5((String) event.getNewValue()).equals(
+				usuarioLogado.getSenha())) {
+			System.out.println();
+		} else {
+			System.out.println();
+		}
+	}
+
+	public void validarConfirmacaoSenha(ValueChangeEvent event) {
+		System.out.println(event.getNewValue());
+	}
+
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
 	}
+
+	public String getSenhaAtual() {
+		return senhaAtual;
+	}
+
+	public void setSenhaAtual(String senhaAtual) {
+		this.senhaAtual = senhaAtual;
+	}
+
+	public String getNovaSenha() {
+		return novaSenha;
+	}
+
+	public void setNovaSenha(String novaSenha) {
+		this.novaSenha = novaSenha;
+	}
+
+	public String getConfirmacaoSenha() {
+		return confirmacaoSenha;
+	}
+
+	public void setConfirmacaoSenha(String confirmacaoSenha) {
+		this.confirmacaoSenha = confirmacaoSenha;
+	}
+
 }

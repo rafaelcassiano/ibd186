@@ -28,9 +28,7 @@ public class CategoriaController {
 	}
 
 	public String iniciarCadastro() {
-		if(categoria != null) {
-			categoria.setId(0);
-		}
+		categoria = null;
 		return Page.CATEGORIA_EDICAO;
 	}
 
