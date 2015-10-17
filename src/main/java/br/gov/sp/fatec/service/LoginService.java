@@ -7,4 +7,6 @@ import br.gov.sp.fatec.model.Usuario;
 @Service
 public interface LoginService {
 	public Usuario validarUsuario(Usuario usuario);
+
+	public void alterarSenha(long id, String novaSenha);
 }

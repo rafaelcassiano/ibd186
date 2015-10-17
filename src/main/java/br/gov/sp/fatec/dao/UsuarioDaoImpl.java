@@ -56,4 +56,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		usuario.setId(id);
 		getCurrentSession().delete(usuario);
 	}
+
+	public void alterarSenha(long usuarioId, String novaSenha) {
+		getCurrentSession()
+				.createSQLQuery(
+						"update usuario set senha = :novaSenha where usuario_id = :usuarioId")
+				.setString("novaSenha", novaSenha)
+				.setLong("usuarioId", usuarioId).executeUpdate();
+	}
 }

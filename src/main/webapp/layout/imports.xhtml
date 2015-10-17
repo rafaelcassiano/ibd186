@@ -31,7 +31,12 @@
         	$(document).ready(function(){
         		$("#divAlterarSenha").dialog({
         		    autoOpen : false,
-        		    modal    : true
+        		    modal    : true,
+        		    width: 500,
+        		    close: function(event,ui) {
+        		        $('.formAlterarSenha').find('input[type="password"]').val('');
+        		        $('.formAlterarSenha').find('span').attr('class','').html('');
+        		    }
         		});
         		$("#linkAlterarSenha").click(function(){
         		   $("#divAlterarSenha").dialog("open"); 
@@ -42,6 +47,12 @@
         		    thousandsSeparator: '.',
         		    limit: 10,
         		    centsLimit:2
+        		});
+        		$('.botaoAlterarSenha').click(function(){
+        		    var alertsArray = $('.formAlterarSenha').find('.alert-warning');
+        		    if(alertsArray === undefined || alertsArray.length === 0) {
+        		        $('#divAlterarSenha').dialog('close');
+        		    }
         		});
         	});
         </script>

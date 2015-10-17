@@ -1,10 +1,14 @@
 package br.gov.sp.fatec.web.controller;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import liquibase.util.MD5Util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +22,11 @@ import br.gov.sp.fatec.web.WebUtils;
 public class LoginController {
 	private Usuario usuarioLogado;
 	private String senhaAtual;
-	private String novaSenha;
 	private String confirmacaoSenha;
+	private String novaSenha;
+	private boolean senhaAtualOk;
+	private boolean novaSenhaOk;
+	private boolean confirmacaoSenhaOk;
 
 	@Autowired
 	private LoginService service;
@@ -46,34 +53,54 @@ public class LoginController {
 	}
 
 	public void alterarSenha() {
-		System.out.println(senhaAtual);
-		System.out.println(novaSenha);
-		System.out.println(confirmacaoSenha);
-	}
-
-	public void validarSenhaAtual(ValueChangeEvent event) {
-		if (!MD5Util.computeMD5((String) event.getNewValue()).equals(
-				usuarioLogado.getSenha())) {
-			System.out.println();
-		} else {
-			System.out.println();
+		if (senhaAtualOk && novaSenhaOk && confirmacaoSenhaOk) {
+			novaSenha = MD5Util.computeMD5(novaSenha);
+			usuarioLogado.setSenha(novaSenha);
+			service.alterarSenha(usuarioLogado.getId(), novaSenha);
+			senhaAtualOk = false;
+			novaSenhaOk = false;
+			confirmacaoSenhaOk = false;
+			senhaAtual = null;
+			novaSenha = null;
+			confirmacaoSenha = null;
 		}
 	}
 
-	public void validarConfirmacaoSenha(ValueChangeEvent event) {
-		System.out.println(event.getNewValue());
+	public void validarSenhaAtual(FacesContext f, UIComponent c, Object obj) {
+		String s = (String) obj;
+		if (s == null
+				|| !MD5Util.computeMD5(s).equals(usuarioLogado.getSenha())) {
+			senhaAtualOk = false;
+			throw new ValidatorException(new FacesMessage(
+					"Senha atual não confere!"));
+		}
+		senhaAtualOk = true;
+	}
+
+	public void validarNovaSenha(FacesContext f, UIComponent c, Object obj) {
+		String s = (String) obj;
+		if (StringUtils.isBlank(s)) {
+			novaSenhaOk = false;
+			throw new ValidatorException(new FacesMessage(
+					"Nova senha é campo obrigatório!"));
+		}
+		novaSenhaOk = true;
+		novaSenha = s;
+	}
+
+	public void validarConfirmacaoSenha(FacesContext f, UIComponent c,
+			Object obj) {
+		String s = (String) obj;
+		if (s == null || novaSenha == null || !s.equals(novaSenha)) {
+			confirmacaoSenhaOk = false;
+			throw new ValidatorException(new FacesMessage(
+					"Confirmação senha não confere!"));
+		}
+		confirmacaoSenhaOk = true;
 	}
 
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
-	}
-
-	public String getSenhaAtual() {
-		return senhaAtual;
-	}
-
-	public void setSenhaAtual(String senhaAtual) {
-		this.senhaAtual = senhaAtual;
 	}
 
 	public String getNovaSenha() {
@@ -82,6 +109,14 @@ public class LoginController {
 
 	public void setNovaSenha(String novaSenha) {
 		this.novaSenha = novaSenha;
+	}
+
+	public String getSenhaAtual() {
+		return senhaAtual;
+	}
+
+	public void setSenhaAtual(String senhaAtual) {
+		this.senhaAtual = senhaAtual;
 	}
 
 	public String getConfirmacaoSenha() {

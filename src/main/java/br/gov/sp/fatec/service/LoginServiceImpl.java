@@ -30,4 +30,9 @@ public class LoginServiceImpl implements LoginService {
 		}
 		return usuarioAux;
 	}
+
+	@Override
+	public void alterarSenha(long usuarioId, String novaSenha) {
+		dao.alterarSenha(usuarioId,novaSenha);
+	}
 }

@@ -32,27 +32,36 @@
             </div>
         </div>
         <div id="divAlterarSenha" title="Alterar Senha" style="display: none">
-            <h:form id="formAlterarSenha">
+            <h:form class="formAlterarSenha">
+                <div class="form-group">                
+                    <h:message for="inputSenhaAtual" id="senhaAtualError" styleClass="alert alert-warning"></h:message>
+                </div>
+                <div class="form-group">                
+                    <h:message for="inputNovaSenha" id="novaSenhaError" styleClass="alert alert-warning"></h:message>
+                </div>
+                <div class="form-group">                
+                    <h:message for="inputConfirmacaoSenha" id="confirmacaoSenhaError" styleClass="alert alert-warning"></h:message>
+                </div>
                 <div class="form-group">
                     <label>Senha Atual:</label>
-                    <h:inputSecret styleClass="form-control" value="#{loginController.senhaAtual}">
-                        <f:ajax/>
+                    <h:inputSecret id="inputSenhaAtual" styleClass="form-control" value="#{loginController.senhaAtual}" validator="#{loginController.validarSenhaAtual}">
+                        <f:ajax render="senhaAtualError" event="blur" execute="@this"/>
                     </h:inputSecret>
                 </div>
                 <div class="form-group">
                     <label>Nova Senha:</label>
-                    <h:inputSecret styleClass="form-control" value="#{loginController.novaSenha}">
-                        <f:ajax/>
+                    <h:inputSecret id="inputNovaSenha" styleClass="form-control" value="#{loginController.novaSenha}" validator="#{loginController.validarNovaSenha}">
+                        <f:ajax render="novaSenhaError" event="blur" execute="@this"/>
                     </h:inputSecret>
                 </div>
                 <div class="form-group">
                     <label>Confirmação Senha:</label>
-                    <h:inputSecret styleClass="form-control" value="#{loginController.confirmacaoSenha}">
-                        <f:ajax/>
+                    <h:inputSecret id="inputConfirmacaoSenha" styleClass="form-control" value="#{loginController.confirmacaoSenha}" validator="#{loginController.validarConfirmacaoSenha}">
+                        <f:ajax render="confirmacaoSenhaError" event="blur" execute="@this"/>
                     </h:inputSecret>
                 </div>
-                <h:commandButton value="Salvar" action="#{loginController.alterarSenha}" styleClass="btn btn-primary">
-                    <f:ajax/>
+                <h:commandButton value="Salvar" action="#{loginController.alterarSenha}" styleClass="btn btn-primary botaoAlterarSenha">
+                    <f:ajax />
                 </h:commandButton>
             </h:form>
         </div>
