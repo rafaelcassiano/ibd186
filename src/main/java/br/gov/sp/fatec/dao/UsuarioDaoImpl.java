@@ -3,6 +3,7 @@ package br.gov.sp.fatec.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -47,7 +48,11 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	public Usuario carregarPorUsuario(String usuario) {
 		Criteria crit = getCurrentSession().createCriteria(Usuario.class);
 		crit.add(Restrictions.eq("usuario", usuario));
-		return (Usuario) crit.uniqueResult();
+		Usuario aux = (Usuario) crit.uniqueResult();
+		if (aux != null) {
+			Hibernate.initialize(aux.getPermissoes());
+		}
+		return aux;
 	}
 
 	@Override

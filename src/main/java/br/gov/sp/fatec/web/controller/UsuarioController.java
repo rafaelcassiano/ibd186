@@ -54,9 +54,6 @@ public class UsuarioController {
 			}
 			return Page.USUARIO_EDICAO;
 		} else {
-			if (usuario.getId() == loginController.getUsuarioLogado().getId()) {
-				loginController.setUsuarioLogado(usuario);
-			}
 			return iniciar();
 		}
 	}

@@ -1,26 +1,33 @@
 package br.gov.sp.fatec.web.controller;
 
+import java.io.IOException;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import liquibase.util.MD5Util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.constantes.Page;
 import br.gov.sp.fatec.model.Usuario;
 import br.gov.sp.fatec.service.LoginService;
-import br.gov.sp.fatec.web.WebUtils;
+import br.gov.sp.fatec.service.UsuarioService;
 
 @Component(value = "loginController")
 @SessionScoped
-public class LoginController {
-	private Usuario usuarioLogado;
+public class LoginController implements AccessDeniedHandler {
 	private String senhaAtual;
 	private String confirmacaoSenha;
 	private String novaSenha;
@@ -30,33 +37,19 @@ public class LoginController {
 
 	@Autowired
 	private LoginService service;
+	@Autowired
+	private UsuarioService usuarioService;
 
-	public String login() {
-		usuarioLogado = service.validarUsuario(usuarioLogado);
-		if (usuarioLogado == null || usuarioLogado.getId() == 0) {
-			WebUtils.incluirMensagemErro("Usuário ou Senha inválidos!");
-			return Page.LOGIN;
-		}
-		return Page.HOME;
-	}
-
-	public String logout() {
-		usuarioLogado = null;
-		return Page.LOGIN;
-	}
-
-	public Usuario getUsuarioLogado() {
-		if (usuarioLogado == null) {
-			usuarioLogado = new Usuario();
-		}
-		return usuarioLogado;
+	public Usuario getUsuario() {
+		return (Usuario) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
 	}
 
 	public void alterarSenha() {
 		if (senhaAtualOk && novaSenhaOk && confirmacaoSenhaOk) {
 			novaSenha = MD5Util.computeMD5(novaSenha);
-			usuarioLogado.setSenha(novaSenha);
-			service.alterarSenha(usuarioLogado.getId(), novaSenha);
+			Usuario usuario = getUsuario();
+			service.alterarSenha(usuario.getId(), novaSenha);
 			senhaAtualOk = false;
 			novaSenhaOk = false;
 			confirmacaoSenhaOk = false;
@@ -68,8 +61,8 @@ public class LoginController {
 
 	public void validarSenhaAtual(FacesContext f, UIComponent c, Object obj) {
 		String s = (String) obj;
-		if (s == null
-				|| !MD5Util.computeMD5(s).equals(usuarioLogado.getSenha())) {
+		Usuario usuario = usuarioService.carregarPorId(getUsuario().getId());
+		if (s == null || !MD5Util.computeMD5(s).equals(usuario.getSenha())) {
 			senhaAtualOk = false;
 			throw new ValidatorException(new FacesMessage(
 					"Senha atual não confere!"));
@@ -99,10 +92,6 @@ public class LoginController {
 		confirmacaoSenhaOk = true;
 	}
 
-	public void setUsuarioLogado(Usuario usuarioLogado) {
-		this.usuarioLogado = usuarioLogado;
-	}
-
 	public String getNovaSenha() {
 		return novaSenha;
 	}
@@ -125,6 +114,14 @@ public class LoginController {
 
 	public void setConfirmacaoSenha(String confirmacaoSenha) {
 		this.confirmacaoSenha = confirmacaoSenha;
+	}
+
+	@Override
+	public void handle(HttpServletRequest request,
+			HttpServletResponse response, AccessDeniedException arg2)
+			throws IOException, ServletException {
+		response.sendRedirect(request.getContextPath().concat("/")
+				.concat(Page.LOGIN));
 	}
 
 }

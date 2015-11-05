@@ -21,21 +21,21 @@
             <h:form id="headerForm">
             <ul class="nav navbar-nav">
                 <li> 
-                    <h:commandLink action="#{categoriaController.iniciar}" value="Categoria"></h:commandLink>
+                    <h:commandLink action="#{categoriaController.iniciar}" value="Categoria" rendered="#{request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_USUARIO')}"></h:commandLink>
                 </li>
                  <li> 
-                    <h:commandLink action="#{produtoController.iniciar}" value="Produto"></h:commandLink>
+                    <h:commandLink action="#{produtoController.iniciar}" value="Produto" rendered="#{request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_USUARIO')}"></h:commandLink>
                 </li>
                  <li> 
-                    <h:commandLink action="#{usuarioController.iniciar}" value="Usuário"></h:commandLink>
+                    <h:commandLink action="#{usuarioController.iniciar}" value="Usuário" rendered="#{request.isUserInRole('ROLE_ADMIN')}"></h:commandLink>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <div class="row-fluid">
                         <p>
-                            <h:commandLink  action="#{loginController.logout}" title="Sair"><span class="glyphicon glyphicon-off"></span></h:commandLink>
-                            Olá #{loginController.usuarioLogado.nome}
+                            <h:outputLink rendered="#{not empty request.userPrincipal}"  value="#{facesContext.externalContext.requestContextPath}/logout" title="Sair"><span class="glyphicon glyphicon-off"></span></h:outputLink>
+                            Olá #{request.userPrincipal.name}
                         </p>
                     </div>
                     <div class="row-fluid" align="center">

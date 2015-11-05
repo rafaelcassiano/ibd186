@@ -21,17 +21,20 @@
       </div>
       <div class="modal-body">
        <h:messages id="messages" globalOnly="true" class="alert alert-danger" role="alert"/>
-        <h:form id="loginForm">  
+        <h:outputText rendered="#{param.erro}">
+            <div class="alert alert-danger">Usuário ou Senha inválidos!</div>
+        </h:outputText>
+        <form id="loginForm" action="login" method="POST">  
             <div class="form-group">
                 <label>Usuário</label>
-                <h:inputText class="form-control" value="#{loginController.usuarioLogado.usuario}" ></h:inputText>
+                <h:inputText id="usuario" class="form-control"></h:inputText>
             </div>
              <div class="form-group">
                 <label>Senha</label>
-                <h:inputSecret class="form-control" value="#{loginController.usuarioLogado.senha}"></h:inputSecret>
+                <h:inputSecret id="senha" class="form-control"></h:inputSecret>
             </div>
-            <h:commandButton action="#{loginController.login}" class="btn btn-primary btn-lg btn-block" value="Login"></h:commandButton>
-        </h:form>
+            <h:commandButton  class="btn btn-primary btn-lg btn-block" value="Login"></h:commandButton>
+        </form>
       </div>
       <div class="modal-footer">
           <div class="col-md-12">

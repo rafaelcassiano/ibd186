@@ -4,15 +4,19 @@ import javax.transaction.Transactional;
 
 import liquibase.util.MD5Util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.dao.UsuarioDaoImpl;
 import br.gov.sp.fatec.model.Usuario;
 
-@Service
+@Service(value="loginService")
 @Transactional
-public class LoginServiceImpl implements LoginService {
+public class LoginServiceImpl implements LoginService, UserDetailsService {
 	@Autowired
 	private UsuarioDaoImpl dao;
 
@@ -33,6 +37,15 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public void alterarSenha(long usuarioId, String novaSenha) {
-		dao.alterarSenha(usuarioId,novaSenha);
+		dao.alterarSenha(usuarioId, novaSenha);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String usuario)
+			throws UsernameNotFoundException {
+		if (StringUtils.isBlank(usuario)) {
+			return null;
+		}
+		return dao.carregarPorUsuario(usuario);
 	}
 }
