@@ -27,7 +27,9 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	public Usuario pesquisarPorId(Long id) {
-		return (Usuario) getCurrentSession().get(Usuario.class, id);
+		Usuario usuario = (Usuario) getCurrentSession().get(Usuario.class, id);
+		Hibernate.initialize(usuario.getPermissoes());
+		return usuario;
 	}
 
 	@Override

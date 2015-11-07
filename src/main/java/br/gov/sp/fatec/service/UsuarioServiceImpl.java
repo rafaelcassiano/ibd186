@@ -36,7 +36,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if (erros != null && erros.size() > 0) {
 			return erros;
 		}
-		usuario.setSenha(MD5Util.computeMD5(usuario.getSenha()));
 		dao.salvar(usuario);
 		return null;
 	}
@@ -45,9 +44,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		List<String> erros = new ArrayList<String>();
 		if (StringUtils.isBlank(usuario.getUsuario())) {
 			erros.add("Usuário é campo obrigatório!");
-		}
-		if (StringUtils.isBlank(usuario.getSenha())) {
-			erros.add("Senha é campo obrigatório!");
 		}
 		if (StringUtils.isBlank(usuario.getNome())) {
 			erros.add("Nome é campo obrigatório!");
@@ -59,9 +55,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 				erros.add("Nome de usuário indisponível!");
 			}
 		}
-		if (!usuario.getSenha().equals(confirmacaoSenha)) {
+		if (StringUtils.isNotBlank(usuario.getSenha())
+				&& !usuario.getSenha().equals(confirmacaoSenha)) {
 			erros.add("A senha está diferente da confirmação!");
 		}
+		if (StringUtils.isNotBlank(usuario.getSenha())) {
+			usuario.setSenha(MD5Util.computeMD5(usuario.getSenha()));
+		}
+		if (usuario.getId() > 0 && StringUtils.isBlank(usuario.getSenha())) {
+			Usuario aux = dao.pesquisarPorId(usuario.getId());
+			usuario.setSenha(aux.getSenha());
+		}
+
 		return erros;
 	}
 

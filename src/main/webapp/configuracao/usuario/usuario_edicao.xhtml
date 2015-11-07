@@ -29,6 +29,11 @@
                         <label>Confirmação Senha</label>
                         <h:inputSecret class="form-control" value="#{usuarioController.confirmacaoSenha}"></h:inputSecret>
                     </div>
+                    <div class="form-group">
+                        <h:selectManyCheckbox styleClass="form-control" value="#{usuarioController.usuario.permissoesNum}">
+                            <f:selectItems value="#{usuarioController.permissoes}" var="perm" itemLabel="#{perm.descricao}" itemValue="#{perm.id}"></f:selectItems>
+                        </h:selectManyCheckbox>
+                    </div>
                     <h:inputHidden value="#{usuarioController.usuario.id}"></h:inputHidden>
                     <h:commandButton class="btn btn-primary" value="Salvar" action="#{usuarioController.salvar}"></h:commandButton>
                 </h:form>

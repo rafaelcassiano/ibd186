@@ -21,12 +21,15 @@
             <h:form id="headerForm">
             <ul class="nav navbar-nav">
                 <li> 
-                    <h:commandLink action="#{categoriaController.iniciar}" value="Categoria" rendered="#{request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_USUARIO')}"></h:commandLink>
+                    <h:commandLink action="#{categoriaController.iniciar}" value="Categoria" rendered="#{request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_CATEGORIA')}"></h:commandLink>
                 </li>
                  <li> 
-                    <h:commandLink action="#{produtoController.iniciar}" value="Produto" rendered="#{request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_USUARIO')}"></h:commandLink>
+                    <h:commandLink action="#{produtoController.iniciar}" value="Produto" rendered="#{request.isUserInRole('ROLE_ADMIN') or request.isUserInRole('ROLE_PRODUTO')}"></h:commandLink>
                 </li>
-                 <li> 
+                <li> 
+                    <h:commandLink action="#{permissaoController.iniciar}" value="Permissao" rendered="#{request.isUserInRole('ROLE_ADMIN')}"></h:commandLink>
+                </li>
+                <li> 
                     <h:commandLink action="#{usuarioController.iniciar}" value="Usuário" rendered="#{request.isUserInRole('ROLE_ADMIN')}"></h:commandLink>
                 </li>
             </ul>

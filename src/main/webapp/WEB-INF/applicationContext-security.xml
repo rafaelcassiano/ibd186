@@ -14,11 +14,14 @@
 		<sec:access-denied-handler ref="loginController" />
 
 		<!-- Restring acesso a pasta seguro /seguro/** -->
-		<sec:intercept-url pattern="/seguro/**"
-			access="hasAnyRole('ROLE_ADMIN', 'ROLE_USUARIO')" />
+		<sec:intercept-url pattern="/seguro/home.xhtml"
+			access="hasAnyRole('ROLE_ADMIN','ROLE_CATEGORIA','ROLE_PRODUTO')" />
 		<sec:intercept-url pattern="/configuracao/**"
 			access="hasRole('ROLE_ADMIN')" />
-
+		<sec:intercept-url pattern="/seguro/categoria/**"
+			access="hasAnyRole('ROLE_ADMIN','ROLE_CATEGORIA')" />
+		<sec:intercept-url pattern="/seguro/produto/**"
+			access="hasAnyRole('ROLE_ADMIN','ROLE_PRODUTO')" />
 		<!-- Page level Spring Security : Intercept access to resources in /** -->
 		<sec:intercept-url pattern="/**" access="permitAll" />
 

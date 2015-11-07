@@ -47,7 +47,7 @@ CREATE TABLE usuario__permissoes (
       ON UPDATE NO ACTION,
   FOREIGN KEY(permissao_id)
     REFERENCES permissao(permissao_id)
-      ON DELETE NO ACTION
+      ON DELETE CASCADE
       ON UPDATE NO ACTION
 );
 

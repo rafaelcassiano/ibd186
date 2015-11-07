@@ -9,4 +9,6 @@ public class Page {
 	public static final String CATEGORIA_EDICAO = "/seguro/categoria/categoria_edicao.xhtml?faces-redirect=true";
 	public static final String PRODUTO_LISTA = "/seguro/produto/produto_lista.xhtml?faces-redirect=true";
 	public static final String PRODUTO_EDICAO = "/seguro/produto/produto_edicao.xhtml?faces-redirect=true";
+	public static final String PERMISSAO_LISTA = "/configuracao/permissao/permissao_lista.xhtml?faces-redirect=true";
+	public static final String PERMISSAO_EDICAO = "/configuracao/permissao/permissao_edicao.xhtml?faces-redirect=true";
 }

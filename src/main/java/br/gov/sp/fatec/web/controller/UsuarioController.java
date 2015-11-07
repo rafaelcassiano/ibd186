@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.gov.sp.fatec.constantes.Page;
+import br.gov.sp.fatec.model.Permissao;
 import br.gov.sp.fatec.model.Usuario;
+import br.gov.sp.fatec.service.PermissaoService;
 import br.gov.sp.fatec.service.UsuarioService;
 import br.gov.sp.fatec.web.WebUtils;
 
@@ -19,9 +21,12 @@ public class UsuarioController {
 	private Usuario usuario;
 	private List<Usuario> usuarios;
 	private String confirmacaoSenha;
+	private List<Permissao> permissoes;
 
 	@Autowired
 	private UsuarioService service;
+	@Autowired
+	private PermissaoService permissaoService;
 
 	@Autowired
 	private LoginController loginController;
@@ -33,11 +38,13 @@ public class UsuarioController {
 
 	public String iniciarCadastro() {
 		usuario = null;
+		permissoes = permissaoService.listar();
 		return Page.USUARIO_EDICAO;
 	}
 
 	public String carregar(Long id) {
 		usuario = service.carregarPorId(id);
+		permissoes = permissaoService.listar();
 		return Page.USUARIO_EDICAO;
 	}
 
@@ -86,6 +93,14 @@ public class UsuarioController {
 
 	public void setConfirmacaoSenha(String confirmacaoSenha) {
 		this.confirmacaoSenha = confirmacaoSenha;
+	}
+
+	public List<Permissao> getPermissoes() {
+		return permissoes;
+	}
+
+	public void setPermissoes(List<Permissao> permissoes) {
+		this.permissoes = permissoes;
 	}
 
 }

@@ -21,7 +21,7 @@ public class Permissao implements GrantedAuthority {
 
 	@Override
 	public String getAuthority() {
-		return descricao;
+		return "ROLE_".concat(descricao);
 	}
 
 	public long getId() {

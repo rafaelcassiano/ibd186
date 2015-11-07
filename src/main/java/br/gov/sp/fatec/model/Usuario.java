@@ -1,5 +1,6 @@
 package br.gov.sp.fatec.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.collections.ListUtils;
+import org.apache.commons.collections.Transformer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -108,5 +111,30 @@ public class Usuario implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public Long[] getPermissoesNum() {
+		if (permissoes != null) {
+			List<Long> ids = new ArrayList<Long>();
+			for (Permissao p : permissoes) {
+				ids.add(p.getId());
+			}
+			return ids.toArray(new Long[ids.size()]);
+		} else {
+			return new Long[] { 0l };
+		}
+	}
+
+	public void setPermissoesNum(Long[] ids) {
+		if (ids == null || ids.length == 0) {
+			permissoes = null;
+		} else {
+			permissoes = new ArrayList<Permissao>();
+			for (Long l : ids) {
+				Permissao p = new Permissao();
+				p.setId(l);
+				permissoes.add(p);
+			}
+		}
 	}
 }
